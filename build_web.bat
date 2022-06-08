@@ -47,7 +47,7 @@ DEL /F docs\%CRATE_NAME_SNAKE_CASE%_bg.wasm
 
 echo Building rust...
 SET BUILD=release
-cargo build -p %CRATE_NAME% --release --lib --target wasm32-unknown-unknown
+cargo build -p %CRATE_NAME_SNAKE_CASE% --release --lib --target wasm32-unknown-unknown
 
 @REM Get the output directory (in the workspace it is in another location)
 FOR /F "delims=" %%i IN ('cargo metadata --format-version=1 ^| jq --raw-output .target_directory') DO SET TARGET=%%i
@@ -60,7 +60,7 @@ IF %FAST% == 0 (
   echo Optimizing wasm...
   @REM to get wasm-opt:  apt/brew/dnf install binaryen
   @REM add -g to get debug symbols :
-  wasm-opt "docs\%CRATE_NAME%_bg.wasm" -O2 --fast-math -o "docs\%CRATE_NAME%_bg.wasm"
+  wasm-opt "docs\%CRATE_NAME_SNAKE_CASE%_bg.wasm" -O2 --fast-math -o "docs\%CRATE_NAME_SNAKE_CASE%_bg.wasm"
 )
 
 echo Finished: docs/%CRATE_NAME_SNAKE_CASE%.wasm"
