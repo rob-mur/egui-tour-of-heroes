@@ -1,8 +1,10 @@
+use crate::types::Hero;
 use crate::widgets::HeroesWidget;
 
 #[derive(Default)]
-pub struct App;
-
+pub struct App {
+    hero: Hero,
+}
 
 impl App {
     /// Called once before the first frame.
@@ -14,8 +16,10 @@ impl App {
 impl eframe::App for App {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
-           ui.heading("Tour of Heroes");
-           ui.add(HeroesWidget{hero: "Windstorm".to_string()});
+            ui.heading("Tour of Heroes");
+            ui.add(HeroesWidget {
+                hero: &mut self.hero,
+            });
         });
     }
 }
