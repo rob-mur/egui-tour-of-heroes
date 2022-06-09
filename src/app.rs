@@ -1,15 +1,20 @@
 use crate::types::Hero;
+use crate::widgets::heroes::HEROES;
 use crate::widgets::HeroesWidget;
 
 #[derive(Default)]
 pub struct App {
-    hero: Hero,
+    heroes: [Hero; 9],
+    selected_hero: Option<usize>,
 }
 
 impl App {
     /// Called once before the first frame.
     pub fn new(_cc: &eframe::CreationContext<'_>) -> Self {
-        Default::default()
+        Self {
+            heroes: HEROES,
+            selected_hero: None,
+        }
     }
 }
 
@@ -18,7 +23,8 @@ impl eframe::App for App {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.heading("Tour of Heroes");
             ui.add(HeroesWidget {
-                hero: &mut self.hero,
+                heroes: &mut self.heroes,
+                selected_hero: &mut self.selected_hero,
             });
         });
     }
